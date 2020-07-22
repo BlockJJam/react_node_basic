@@ -4,11 +4,10 @@ const app = require('./config/express')();
 const cookieParser = require('cookie-parser');
 const dotenv = require("dotenv");
 const mongoose = require('mongoose');
-const port = 5001;
 const {User} = require("./models/User");
 const {auth} = require("./config/auth");
 
-dotenv.config({ path: __dirname+"/../.env"});
+dotenv.config({ path: __dirname+"/../../.env"});
 const MONGO_URL = process.env.MONGO_URL;
 app.use(cookieParser());
 
@@ -17,6 +16,12 @@ mongoose.connect(MONGO_URL, {
 }).then(()=> console.log('mongoDB connected')).catch(err=> console.log(err));
 
 app.get('/', (req,res) => res.send('hello world! '));
+
+// example react connect
+app.get('/api/hello',(req,res)=>{
+
+  res.send("hello!!!");
+})
 
 app.post('/api/users/register', (req, res)=> {
 
@@ -84,5 +89,5 @@ app.get('/api/users/logout', auth, (req,res)=>{
     })
   });
 });
-
+const port = 5001;
 app.listen(port, ()=> console.log(`예제 app ahn john study ${port}`));
